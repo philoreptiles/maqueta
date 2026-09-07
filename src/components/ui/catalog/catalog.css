@@ -1,19 +1,20 @@
-/* Restablece la cuadrícula del catálogo */
 .catalog-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 15px;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
     width: 100%;
     box-sizing: border-box;
 }
 
-.catalog-loading, .catalog-error, .catalog-empty {
+.catalog-loading, 
+.catalog-error, 
+.catalog-empty {
     text-align: center;
     padding: 3rem;
-    background-color: var(--card-bg);
+    background-color: var(--card-bg, #282B2B);
     border-radius: 10px;
     font-size: 1.1rem;
-    color: var(--jet-color);
+    color: var(--text-light, #F4F5F5);
 }
 
 .spinner {
@@ -21,7 +22,7 @@
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    border-left-color: var(--primary-color);
+    border-left-color: var(--primary-color, #EE6C29);
     animation: spin 1s linear infinite;
     margin: 0 auto 1rem auto;
 }
@@ -31,19 +32,6 @@
     100% { transform: rotate(360deg); }
 }
 
-@media (max-width: 992px) {
-    .catalog-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
-
-@media (max-width: 576px) {
-    .catalog-grid {
-        grid-template-columns: 1fr;
-    }
-}
-
-/* Estado del Catálogo Vacío */
 .empty-catalog {
     display: flex;
     flex-direction: column;
@@ -51,9 +39,9 @@
     justify-content: center;
     padding: 4rem 2rem;
     text-align: center;
-    background-color: #282B2B; /* Jet */
+    background-color: #282B2B;
     border-radius: 12px;
-    border: 2px dashed #7AA6B3; /* Moonstone */
+    border: 2px dashed #7AA6B3;
     margin: 2rem 0;
     width: 100%;
     box-sizing: border-box;
@@ -71,13 +59,13 @@
 }
 
 .empty-catalog p {
-    color: #7AA6B3; /* Moonstone */
+    color: #7AA6B3;
     font-size: 1rem;
     margin: 0 0 1.5rem 0;
 }
 
 .btn-clear-filters {
-    background-color: #EE6C29; /* Orange */
+    background-color: #EE6C29;
     color: #ffffff;
     padding: 0.75rem 2rem;
     border: none;
@@ -91,4 +79,28 @@
 .btn-clear-filters:hover {
     background-color: #d45c1f;
     transform: translateY(-2px);
+}
+
+/* Tablet (768px a 1024px): 3 Columnas */
+@media (max-width: 1024px) and (min-width: 768px) {
+    .catalog-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0.85rem;
+    }
+}
+
+/* Móvil (< 768px): 2 Columnas */
+@media (max-width: 767px) {
+    .catalog-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.4rem;
+        padding: 1.5rem;
+    }
+}
+
+/* Móvil Pequeño (< 400px) */
+@media (max-width: 399px) {
+    .catalog-grid {
+        gap: 0.35rem;
+    }
 }
