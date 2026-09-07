@@ -532,8 +532,18 @@ input[type="number"] {
     display: block;
 }
 
-/* Badges de Estatus */
-.status-badge {
+/* Badges de Estatus
+   NOTA: .status-badge y sus variantes también existen en card.css (para el
+   overlay de las tarjetas del catálogo público) con "position: absolute".
+   Como card.css se importa globalmente vía main.css, esas reglas también
+   llegan a esta página. Aquí las escopamos bajo ".table-premium" para que
+   ganen siempre por especificidad, y reseteamos explícitamente "position"
+   y demás propiedades de posicionamiento absoluto para que el badge se
+   quede dentro de la celda de la tabla en vez de salir del flujo normal. */
+.table-premium .status-badge {
+    position: static;
+    top: auto;
+    right: auto;
     display: inline-block;
     padding: 0.25rem 0.65rem;
     border-radius: 20px;
@@ -541,27 +551,28 @@ input[type="number"] {
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.4px;
+    box-shadow: none;
 }
 
-.status-disponible {
+.table-premium .status-disponible {
     background: rgba(46, 125, 50, 0.2);
     color: #4CAF50;
     border: 1px solid rgba(76, 175, 80, 0.4);
 }
 
-.status-apartado {
+.table-premium .status-apartado {
     background: rgba(238, 108, 41, 0.2);
     color: #EE6C29;
     border: 1px solid rgba(238, 108, 41, 0.4);
 }
 
-.status-vendido {
+.table-premium .status-vendido {
     background: rgba(211, 47, 47, 0.2);
     color: #EF5350;
     border: 1px solid rgba(239, 83, 80, 0.4);
 }
 
-.status-holdback {
+.table-premium .status-holdback {
     background: rgba(122, 166, 179, 0.2);
     color: #7AA6B3;
     border: 1px solid rgba(122, 166, 179, 0.4);
