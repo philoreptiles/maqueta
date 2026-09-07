@@ -1,0 +1,97 @@
+﻿.card {
+    background-color: var(--card-bg, #282B2B);
+    border: 1px solid var(--border-color, #3D4242);
+    border-radius: 12px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.25s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.25s ease;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.5);
+    border-color: var(--moonstone-color, #7AA6B3);
+}
+
+.card-image-wrapper {
+    position: relative;
+    width: 100%;
+    height: 220px;
+    overflow: hidden;
+    background-color: var(--jet-dark, #1E2020);
+}
+
+.card-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.35s ease;
+}
+
+.card:hover .card-image {
+    transform: scale(1.05);
+}
+
+/* Fijación de la etiqueta de disponibilidad */
+.status-badge {
+    position: absolute;
+    top: 5px;
+    right: 4px;
+    z-index: 10 !important;
+    padding: 0.3rem 0.7rem;
+    border-radius: 10px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: #ffffff;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+    pointer-events: none;
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+.status-disponible { background-color: var(--status-disponible, #2E7D32); }
+.status-apartado { background-color: var(--status-apartado, #EE6C29); }
+.status-vendido { background-color: var(--status-vendido, #D32F2F); }
+.status-holdback { background-color: var(--status-holdback, #7AA6B3); }
+
+.card-content {
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    flex: 1;
+}
+
+.card-species {
+    font-family: var(--font-primary, serif);
+    font-style: italic;
+    font-size: 0.95rem;
+    color: var(--moonstone-color, #7AA6B3);
+}
+
+.card-genetics {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--text-light, #F4F5F5);
+    margin: 0;
+    line-height: 1.2;
+}
+
+.card-details {
+    font-size: 0.88rem;
+    color: #A0A5A5;
+    margin-top: 0.1rem;
+}
+
+.card-price {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--primary-color, #EE6C29);
+    margin-top: auto;
+    padding-top: 0.1rem;
+}
