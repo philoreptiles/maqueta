@@ -1,33 +1,30 @@
 import { defineConfig } from 'vite';
-import path from 'path';
-import { fileURLToPath } from 'url';
-
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
+import { fileURLToPath, URL } from 'node:url';
 
 export default defineConfig({
   resolve: {
     alias: {
-      '@components': path.resolve(__dirname, 'src/components'),
-      '@ui': path.resolve(__dirname, 'src/components/ui'),
-      '@pages': path.resolve(__dirname, 'src/pages'),
-      '@styles': path.resolve(__dirname, 'src/styles'),
-      '@utils': path.resolve(__dirname, 'src/utils'),
-    }
+      '@components': fileURLToPath(new URL('./src/components', import.meta.url)),
+      '@ui': fileURLToPath(new URL('./src/components/ui', import.meta.url)),
+      '@pages': fileURLToPath(new URL('./src/pages', import.meta.url)),
+      '@styles': fileURLToPath(new URL('./src/styles', import.meta.url)),
+      '@utils': fileURLToPath(new URL('./src/utils', import.meta.url)),
+    },
   },
   server: {
     port: 5173,
-    open: true
+    open: true,
   },
   build: {
     outDir: 'dist',
     emptyOutDir: true,
     rollupOptions: {
       input: {
-        main: path.resolve(__dirname, 'index.html'),
-        nosotros: path.resolve(__dirname, 'nosotros.html'),
-        admin: path.resolve(__dirname, 'src/pages/admin/admin.html'),
-        login: path.resolve(__dirname, 'src/pages/login/login.html'),
-      }
-    }
-  }
+        main: fileURLToPath(new URL('./index.html', import.meta.url)),
+        nosotros: fileURLToPath(new URL('./nosotros.html', import.meta.url)),
+        admin: fileURLToPath(new URL('./src/pages/admin/admin.html', import.meta.url)),
+        login: fileURLToPath(new URL('./src/pages/login/login.html', import.meta.url)),
+      },
+    },
+  },
 });
