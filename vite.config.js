@@ -1,29 +1,26 @@
 import { defineConfig } from 'vite';
-import { fileURLToPath, URL } from 'node:url';
+import react from '@vitejs/plugin-react';
 
 export default defineConfig({
+  plugins: [react()],
   resolve: {
     alias: {
-      '@components': fileURLToPath(new URL('./src/components', import.meta.url)),
-      '@ui': fileURLToPath(new URL('./src/components/ui', import.meta.url)),
-      '@pages': fileURLToPath(new URL('./src/pages', import.meta.url)),
-      '@styles': fileURLToPath(new URL('./src/styles', import.meta.url)),
-      '@utils': fileURLToPath(new URL('./src/utils', import.meta.url)),
+      '@components': '/src/components',
+      '@ui': '/src/components/ui',
+      '@pages': '/src/pages',
+      '@styles': '/src/styles',
+      '@utils': '/src/utils',
     },
-  },
-  server: {
-    port: 5173,
-    open: true,
   },
   build: {
     outDir: 'dist',
     emptyOutDir: true,
     rollupOptions: {
       input: {
-        main: fileURLToPath(new URL('./index.html', import.meta.url)),
-        nosotros: fileURLToPath(new URL('./nosotros.html', import.meta.url)),
-        admin: fileURLToPath(new URL('./src/pages/admin/admin.html', import.meta.url)),
-        login: fileURLToPath(new URL('./src/pages/login/login.html', import.meta.url)),
+        main: 'index.html',
+        nosotros: 'nosotros.html',
+        admin: 'src/pages/admin/admin.html',
+        login: 'src/pages/login/login.html',
       },
     },
   },
