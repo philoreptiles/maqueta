@@ -23,7 +23,6 @@ export async function getEjemplares(filters = {}) {
     }
     if (filters.anio && filters.anio !== 'todos') {
         const yearNum = parseInt(filters.anio, 10);
-        // Filtra por igualdad numérica o texto según cómo esté guardado en Supabase
         if (!isNaN(yearNum)) {
             query = query.or(`nacimiento.eq.${yearNum},nacimiento.eq.${filters.anio}`);
         }
@@ -53,10 +52,6 @@ export async function getEjemplares(filters = {}) {
     return data;
 }
 
-/**
- * Obtiene los años de nacimiento únicos registrados en Supabase
- * Filtrados dinámicamente según la genética, estatus, sexo o precio aplicados
- */
 export async function getAniosDisponibles(filters = {}) {
     try {
         let query = supabase

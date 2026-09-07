@@ -1,4 +1,13 @@
-import { getAniosDisponibles } from '../../../supabase-config.js';
+import { getAniosDisponibles } from '/src/supabase-config.js';
+
+// Función auxiliar para evitar peticiones masivas a Supabase mientras se escribe
+function debounce(fn, delay = 300) {
+    let timeoutId;
+    return (...args) => {
+        clearTimeout(timeoutId);
+        timeoutId = setTimeout(() => fn(...args), delay);
+    };
+}
 
 export async function renderFilters(containerId, onApplyCallback) {
     const container = document.getElementById(containerId);
@@ -27,7 +36,7 @@ export async function renderFilters(containerId, onApplyCallback) {
                         <option value="todos">Todos</option>
                         <option value="Macho">Macho</option>
                         <option value="Hembra">Hembra</option>
-                        <option value="No sexado">No sexado</option>
+                        <option value="Sin sexar">Sin sexar</option>
                     </select>
                 </div>
                 <div class="filter-group">
@@ -63,22 +72,27 @@ export async function renderFilters(containerId, onApplyCallback) {
     const yearSelect = document.getElementById('filter-anio');
 
     const getFilterValues = () => ({
-        genetica: document.getElementById('filter-genetica').value,
+        genetica: document.getElementById('filter-genetica').value.trim(),
         estatus: document.getElementById('filter-estatus').value,
         sexo: document.getElementById('filter-sexo').value,
         anio: yearSelect.value,
         precioRango: document.getElementById('filter-precio').value
     });
 
-    // Actualiza dinámicamente las opciones del select de Año
     const refreshAvailableYears = async () => {
         const currentSelectedYear = yearSelect.value;
         const currentFilters = getFilterValues();
-        const availableYears = await getAniosDisponibles(currentFilters);
+        let availableYears = [];
+
+        try {
+            availableYears = (await getAniosDisponibles(currentFilters)) || [];
+        } catch (error) {
+            console.error('Error al obtener años disponibles:', error);
+        }
 
         yearSelect.innerHTML = '';
 
-        if (availableYears.length === 0) {
+        if (!availableYears || availableYears.length === 0) {
             const option = document.createElement('option');
             option.value = 'todos';
             option.textContent = 'Sin años disponibles';
@@ -96,7 +110,7 @@ export async function renderFilters(containerId, onApplyCallback) {
                 yearSelect.appendChild(option);
             });
 
-            if (availableYears.includes(Number(currentSelectedYear))) {
+            if (currentSelectedYear !== 'todos' && availableYears.includes(Number(currentSelectedYear))) {
                 yearSelect.value = currentSelectedYear;
             } else {
                 yearSelect.value = 'todos';
@@ -104,16 +118,16 @@ export async function renderFilters(containerId, onApplyCallback) {
         }
     };
 
-    // Poblado inicial
     await refreshAvailableYears();
 
-    // Sincronización al cambiar genética, estatus, sexo o precio
+    const debouncedRefresh = debounce(refreshAvailableYears, 350);
+
     ['filter-genetica', 'filter-estatus', 'filter-sexo', 'filter-precio'].forEach(id => {
         const elem = document.getElementById(id);
         if (elem) {
             elem.addEventListener('change', refreshAvailableYears);
             if (elem.tagName === 'INPUT') {
-                elem.addEventListener('input', refreshAvailableYears);
+                elem.addEventListener('input', debouncedRefresh);
             }
         }
     });
@@ -129,29 +143,32 @@ export async function renderFilters(containerId, onApplyCallback) {
         onApplyCallback(getFilterValues());
     };
 
-    clearBtn.addEventListener('click', resetAndApply);
+    if (clearBtn) {
+        clearBtn.addEventListener('click', resetAndApply);
+    }
 
-    // Escucha el evento global al hacer clic en "Limpiar filtros" desde la pantalla de catálogo vacío
     window.addEventListener('clearFiltersTrigger', resetAndApply);
 
-    window.addEventListener('scroll', () => {
-        if (window.scrollY > 200) {
-            scrollTopBtn.classList.add('is-visible');
-        } else {
-            scrollTopBtn.classList.remove('is-visible');
-        }
-    });
+    if (scrollTopBtn) {
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 200) {
+                scrollTopBtn.classList.add('is-visible');
+            } else {
+                scrollTopBtn.classList.remove('is-visible');
+            }
+        });
 
-    scrollTopBtn.addEventListener('click', () => {
-        const catalogTarget = document.getElementById('catalog-root');
-        if (catalogTarget) {
-            const filterHeight = container.offsetHeight || 80;
-            const elementPosition = catalogTarget.getBoundingClientRect().top + window.scrollY;
-            
-            window.scrollTo({
-                top: elementPosition - filterHeight - 10,
-                behavior: 'smooth'
-            });
-        }
-    });
+        scrollTopBtn.addEventListener('click', () => {
+            const catalogTarget = document.getElementById('catalog-root');
+            if (catalogTarget) {
+                const filterHeight = container.offsetHeight || 80;
+                const elementPosition = catalogTarget.getBoundingClientRect().top + window.scrollY;
+                
+                window.scrollTo({
+                    top: elementPosition - filterHeight - 10,
+                    behavior: 'smooth'
+                });
+            }
+        });
+    }
 }

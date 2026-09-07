@@ -1,13 +1,289 @@
 ﻿<!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Admin - Mi Proyecto</title>
-    <link rel="stylesheet" href="/src/styles/main.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Administración - Escama y Colmillo</title>
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="stylesheet" href="../../styles/main.css">
+    <link rel="stylesheet" href="../../styles/pages/admin.css">
 </head>
 <body>
-    <div id="app"></div>
-    <script type="module" src="/src/pages/admin/admin-view.js"></script>
+
+    <header class="header">
+        <div class="header-container">
+            <a href="/index.html" class="logo-link">
+                <span class="brand-title">ESCAMA Y COLMILLO</span>
+            </a>
+            <nav class="nav-menu">
+                <a href="/index.html" class="nav-link">Ejemplares</a>
+                <a href="/nosotros.html" class="nav-link">Nosotros</a>
+                <div id="auth-header-action"></div>
+            </nav>
+        </div>
+    </header>
+
+    <main class="admin-main">
+        <!-- VISTA LOGIN -->
+        <section id="login-section" class="premium-card">
+            <h2 class="card-title">Acceso Administrativo</h2>
+            <p style="color: var(--color-text-muted); margin-bottom: 1.25rem;">Ingresa tus credenciales para gestionar el catálogo</p>
+            
+            <div id="login-error-msg" class="alert-premium alert-error hidden"></div>
+
+            <form id="login-form" class="admin-form">
+                <div class="form-group-premium" style="margin-bottom: 1rem;">
+                    <label for="login-email">Usuario / Email</label>
+                    <input type="email" id="login-email" required placeholder="admin@escamaycolmillo.com">
+                </div>
+                <div class="form-group-premium" style="margin-bottom: 1.25rem;">
+                    <label for="login-password">Contraseña</label>
+                    <input type="password" id="login-password" required placeholder="••••••••">
+                </div>
+                <button type="submit" id="btn-login" class="btn-premium" style="width: 100%;">Iniciar Sesión</button>
+            </form>
+        </section>
+
+        <!-- DASHBOARD -->
+        <div id="admin-dashboard" class="hidden">
+            
+            <div class="dashboard-header">
+                <h1>Panel de Control del Inventario</h1>
+                <p>Gestiona los ejemplares disponibles en el catálogo web.</p>
+            </div>
+
+            <div id="status-alert" class="alert-premium hidden"></div>
+
+            <!-- SECCIÓN FORMULARIO AGREGAR -->
+            <section class="premium-card">
+                <h2 class="card-title">Agregar nuevo ejemplar</h2>
+                <form id="add-ejemplar-form" class="admin-grid-form">
+                    
+                    <!-- Columna Izquierda -->
+                    <div class="form-column">
+                        <div class="form-group-premium">
+                            <label for="especie">Especie *</label>
+                            <input type="text" id="especie" name="especie" required placeholder="Ej. Crotalus atrox">
+                        </div>
+
+                        <div class="form-group-premium">
+                            <label for="genetica">Genética</label>
+                            <input type="text" id="genetica" name="genetica" placeholder="Ej. Albino">
+                        </div>
+
+                        <div class="form-group-premium">
+                            <label for="sexo">Sexo *</label>
+                            <select id="sexo" name="sexo" required>
+                                <option value="Macho">Macho</option>
+                                <option value="Hembra">Hembra</option>
+                                <option value="No sexado" selected>No sexado</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group-premium">
+                            <label for="nacimiento">Año de nacimiento *</label>
+                            <input type="number" id="nacimiento" name="nacimiento" min="2000" max="2030" value="2026" required>
+                        </div>
+                    </div>
+
+                    <!-- Columna Derecha -->
+                    <div class="form-column">
+                        <div class="form-group-premium">
+                            <label for="precio">Precio (MXN) *</label>
+                            <input type="number" id="precio" name="precio" step="0.01" min="0" required placeholder="0.00">
+                        </div>
+
+                        <div class="form-group-premium">
+                            <label for="estatus">Estatus *</label>
+                            <select id="estatus" name="estatus" required>
+                                <option value="Disponible" selected>Disponible</option>
+                                <option value="Apartado">Apartado</option>
+                                <option value="Vendido">Vendido</option>
+                                <option value="Holdback">Holdback</option>
+                            </select>
+                        </div>
+
+                        <!-- Drag & Drop Imagen 1 -->
+                        <div class="form-group-premium">
+                            <label>Imagen 1 (Principal) *</label>
+                            <div class="drop-zone" id="drop-zone-1">
+                                <svg class="drop-icon" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14zm-5-7l-3 3.72L9 13l-3 4h12l-4-5z"/></svg>
+                                <span class="drop-text">Arrastra o selecciona la imagen principal</span>
+                                <input type="file" id="imagen1" accept="image/*" required>
+                            </div>
+                            <div id="preview-1" class="preview-container hidden"></div>
+                        </div>
+
+                        <!-- Drag & Drop Imagen 2 -->
+                        <div class="form-group-premium">
+                            <label>Imagen 2 (Opcional)</label>
+                            <div class="drop-zone" id="drop-zone-2">
+                                <svg class="drop-icon" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14zm-5-7l-3 3.72L9 13l-3 4h12l-4-5z"/></svg>
+                                <span class="drop-text">Arrastra o selecciona una imagen secundaria</span>
+                                <input type="file" id="imagen2" accept="image/*">
+                            </div>
+                            <div id="preview-2" class="preview-container hidden"></div>
+                        </div>
+                    </div>
+
+                    <div class="form-actions-full">
+                        <button type="submit" id="btn-save" class="btn-premium">Guardar ejemplar</button>
+                    </div>
+                </form>
+            </section>
+
+            <!-- SECCIÓN ÚLTIMOS AGREGADOS -->
+            <section class="premium-card">
+                <h2 class="card-title">Últimos ejemplares agregados</h2>
+                <div class="table-container-premium">
+                    <table class="table-premium">
+                        <thead>
+                            <tr>
+                                <th>Imagen</th>
+                                <th>Especie</th>
+                                <th>Genética</th>
+                                <th>Sexo</th>
+                                <th>Año</th>
+                                <th>Precio</th>
+                                <th>Estatus</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="latest-table-body">
+                            <tr><td colspan="8" style="text-align: center;">Cargando registros...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- PANEL DE ESTADÍSTICAS EN TIEMPO REAL -->
+            <div class="stats-panel" id="stats-container">
+                <div class="stat-card">
+                    <div class="stat-icon icon-total">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="18" y1="20" x2="18" y2="10"></line>
+                            <line x1="12" y1="20" x2="12" y2="4"></line>
+                            <line x1="6" y1="20" x2="6" y2="14"></line>
+                        </svg>
+                    </div>
+                    <span class="stat-number" id="stat-total">0</span>
+                    <span class="stat-label">Total Ejemplares</span>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon icon-disponible">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                            <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                        </svg>
+                    </div>
+                    <span class="stat-number" id="stat-disponibles">0</span>
+                    <span class="stat-label">Disponibles</span>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon icon-apartado">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <polyline points="12 6 12 12 16 14"></polyline>
+                        </svg>
+                    </div>
+                    <span class="stat-number" id="stat-apartados">0</span>
+                    <span class="stat-label">Apartados</span>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon icon-vendido">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+                            <line x1="3" y1="6" x2="21" y2="6"></line>
+                            <path d="M16 10a4 4 0 0 1-8 0"></path>
+                        </svg>
+                    </div>
+                    <span class="stat-number" id="stat-vendidos">0</span>
+                    <span class="stat-label">Vendidos</span>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon icon-holdback">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
+                        </svg>
+                    </div>
+                    <span class="stat-number" id="stat-holdbacks">0</span>
+                    <span class="stat-label">Holdback</span>
+                </div>
+            </div>
+
+            <!-- SECCIÓN INVENTARIO Y FILTROS -->
+            <section class="premium-card">
+                <h2 class="card-title">Filtrar inventario completo</h2>
+                
+                <form id="filter-form" class="filter-grid-premium">
+                    <div class="form-group-premium">
+                        <label for="filter-estatus">Estatus</label>
+                        <select id="filter-estatus">
+                            <option value="">Todos</option>
+                            <option value="Disponible">Disponible</option>
+                            <option value="Apartado">Apartado</option>
+                            <option value="Vendido">Vendido</option>
+                            <option value="Holdback">Holdback</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group-premium">
+                        <label for="filter-genetica">Genética</label>
+                        <input type="text" id="filter-genetica" placeholder="Buscar genética...">
+                    </div>
+
+                    <div class="form-group-premium">
+                        <label for="filter-sexo">Sexo</label>
+                        <select id="filter-sexo">
+                            <option value="">Todos</option>
+                            <option value="Macho">Macho</option>
+                            <option value="Hembra">Hembra</option>
+                            <option value="No sexado">No sexado</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group-premium">
+                        <label for="filter-anio">Año</label>
+                        <select id="filter-anio">
+                            <option value="">Todos los años</option>
+                        </select>
+                    </div>
+
+                    <div class="filter-actions-right">
+                        <button type="button" id="btn-export-csv" class="btn-secondary-premium">Descargar inventario (CSV)</button>
+                        <button type="button" id="btn-reset-filters" class="btn-secondary-premium">Limpiar filtros</button>
+                        <button type="submit" class="btn-premium" style="padding: 0.45rem 1.5rem; font-size: 0.85rem;">Aplicar filtros</button>
+                    </div>
+                </form>
+
+                <div class="table-container-premium" style="margin-top: 1.25rem;">
+                    <table class="table-premium">
+                        <thead>
+                            <tr>
+                                <th>Imagen</th>
+                                <th>Especie</th>
+                                <th>Genética</th>
+                                <th>Sexo</th>
+                                <th>Año</th>
+                                <th>Precio</th>
+                                <th>Estatus</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="full-inventory-table-body">
+                            <tr><td colspan="8" style="text-align: center;">Cargando inventario...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <script type="module" src="./admin-view.js"></script>
 </body>
 </html>
