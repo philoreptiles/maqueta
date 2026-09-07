@@ -6,6 +6,7 @@
 
 let currentFilteredData = [];
 let editingEjemplarId = null;
+let showingAll = false;
 
 
 // ==========================================
@@ -132,9 +133,12 @@ function setupFormListeners() {
     const btnResetFilters = document.getElementById('btn-reset-filters');
     const btnExportCsv = document.getElementById('btn-export-csv');
     const addForm = document.getElementById('add-ejemplar-form');
+    const btnToggleInventory = document.getElementById('btn-toggle-inventory');
 
     filterForm?.addEventListener('submit', event => {
         event.preventDefault();
+
+        showingAll = false;
 
         const filtros = {
             estatus: document.getElementById('filter-estatus').value,
@@ -147,6 +151,7 @@ function setupFormListeners() {
     });
 
     btnResetFilters?.addEventListener('click', () => {
+        showingAll = false;
         filterForm?.reset();
         loadFullInventory();
     });
@@ -154,6 +159,11 @@ function setupFormListeners() {
     btnExportCsv?.addEventListener('click', () => {
         const filename = getCSVFilename();
         downloadCSV(currentFilteredData, filename);
+    });
+
+    btnToggleInventory?.addEventListener('click', () => {
+        showingAll = !showingAll;
+        renderInventoryTable();
     });
 
     addForm?.addEventListener('submit', handleAddEjemplar);
@@ -783,7 +793,6 @@ async function deleteEjemplar(id, especie) {
 async function loadDashboardData() {
 
     await Promise.all([
-        loadLatestEjemplares(),
         loadFullInventory(),
         populateYearFilter(),
         renderEstadisticas()
@@ -792,42 +801,7 @@ async function loadDashboardData() {
 
 
 // ==========================================
-// ÚLTIMOS EJEMPLARES
-// ==========================================
-
-async function loadLatestEjemplares() {
-
-    const latestTableBody = document.getElementById('latest-table-body');
-
-    if (!latestTableBody) return;
-
-    try {
-        const { data, error } = await supabase
-            .from('ejemplares')
-            .select('*')
-            .order('created_at', { ascending: false })
-            .limit(5);
-
-        if (error) throw error;
-
-        renderTableRows(data, latestTableBody);
-
-    } catch (err) {
-        console.error('Error al cargar últimos ejemplares:', err);
-
-        latestTableBody.innerHTML = `
-            <tr>
-                <td colspan="9" style="text-align: center; color: red;">
-                    Error al cargar registros.
-                </td>
-            </tr>
-        `;
-    }
-}
-
-
-// ==========================================
-// INVENTARIO COMPLETO
+// INVENTARIO COMPLETO Y DESPLEGABLE
 // ==========================================
 
 async function loadFullInventory(filtros = {}) {
@@ -857,7 +831,7 @@ async function loadFullInventory(filtros = {}) {
         if (error) throw error;
 
         currentFilteredData = data || [];
-        renderTableRows(currentFilteredData, fullTableBody);
+        renderInventoryTable();
 
     } catch (err) {
         console.error('Error al filtrar inventario:', err);
@@ -870,6 +844,30 @@ async function loadFullInventory(filtros = {}) {
             </tr>
         `;
     }
+}
+
+
+function renderInventoryTable() {
+
+    const fullTableBody = document.getElementById('full-inventory-table-body');
+    const btnToggleInventory = document.getElementById('btn-toggle-inventory');
+
+    if (!fullTableBody) return;
+
+    const totalItems = currentFilteredData.length;
+
+    if (btnToggleInventory) {
+        if (totalItems <= 5) {
+            btnToggleInventory.disabled = true;
+            btnToggleInventory.textContent = 'Ver todos';
+        } else {
+            btnToggleInventory.disabled = false;
+            btnToggleInventory.textContent = showingAll ? 'Mostrar menos' : 'Ver todos';
+        }
+    }
+
+    const dataToRender = showingAll ? currentFilteredData : currentFilteredData.slice(0, 5);
+    renderTableRows(dataToRender, fullTableBody);
 }
 
 

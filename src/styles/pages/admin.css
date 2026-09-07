@@ -129,9 +129,7 @@ body.modal-open {
     gap: 1.75rem;
 }
 
-/* ==========================================================
-   FORMULARIO "AGREGAR NUEVO EJEMPLAR" ULTRA COMPACTO
-   ========================================================== */
+/* Formulario "Agregar nuevo ejemplar" */
 .premium-card:has(#add-ejemplar-form) {
     padding: 1rem 1.5rem;
 }
@@ -256,9 +254,7 @@ body.modal-open {
     color: var(--color-text-main);
 }
 
-/* ==========================================================
-   ELIMINAR FLECHAS EN INPUTS NUMBER (AGREGAR Y EDITAR)
-   ========================================================== */
+/* Eliminar flechas en inputs number */
 input[type="number"]::-webkit-outer-spin-button,
 input[type="number"]::-webkit-inner-spin-button {
     -webkit-appearance: none;
@@ -423,9 +419,7 @@ input[type="number"] {
     font-weight: 600;
 }
 
-/* ==========================================================
-   FILTROS DE INVENTARIO COMPACTOS
-   ========================================================== */
+/* Filtros de Inventario */
 .premium-card:has(.filter-grid-premium) {
     padding: 1rem 1.5rem;
 }
@@ -469,6 +463,20 @@ input[type="number"] {
 .filter-actions-right .btn-secondary-premium {
     padding: 0.4rem 1rem;
     font-size: 0.82rem;
+}
+
+/* Contenedor del botón Ver Todos / Mostrar Menos */
+.inventory-toggle-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 1.25rem;
+}
+
+.inventory-toggle-container .btn-secondary-premium:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    border-color: var(--color-border);
+    background: transparent;
 }
 
 /* Tablas */
@@ -605,9 +613,7 @@ input[type="number"] {
     border-color: #EF5350;
 }
 
-/* ==========================================================
-   MODAL DE EDICIÓN ULTRA COMPACTO (SIN SCROLL)
-   ========================================================== */
+/* Modal de Edición */
 .edit-modal-overlay {
     position: fixed;
     inset: 0;
@@ -729,7 +735,6 @@ input[type="number"] {
     margin-bottom: 0.4rem;
 }
 
-/* Inputs y Selects dentro del modal de edición */
 .edit-modal-form .form-group-premium {
     gap: 0.15rem;
 }
@@ -759,9 +764,6 @@ input[type="number"] {
     color: var(--color-text-main);
 }
 
-/* ==========================================================
-   IMÁGENES DEL MODAL (3 COLUMNAS ULTRA COMPACTAS)
-   ========================================================== */
 .edit-images-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
