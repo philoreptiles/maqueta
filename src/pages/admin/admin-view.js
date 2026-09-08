@@ -1051,3 +1051,19 @@ function showAlert(message, type = 'info') {
         }, 4000);
     }
 }
+
+let lastScrollY = window.scrollY;
+const header = document.querySelector('.header');
+
+window.addEventListener('scroll', () => {
+    if (!header) return;
+    
+    if (window.scrollY > lastScrollY && window.scrollY > 80) {
+        // Deslizando hacia abajo: Ocultar
+        header.classList.add('header-hidden');
+    } else {
+        // Deslizando hacia arriba: Mostrar
+        header.classList.remove('header-hidden');
+    }
+    lastScrollY = window.scrollY;
+});
