@@ -49,3 +49,30 @@
 .btn-primary:hover {
     background: #2c2c4e;
 }
+
+/* ==========================================
+   Estilos exclusivos para dispositivos móviles
+   ========================================== */
+@media (max-width: 480px) {
+    .login-container {
+        width: 90%;
+        margin: 1rem auto;
+        padding: 1.5rem 1.25rem;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+    }
+
+    .login-container h1 {
+        font-size: 1.5rem;
+        margin-bottom: 1.25rem;
+    }
+
+    .form-group {
+        margin-bottom: 1rem;
+    }
+
+    .form-group input,
+    .btn-primary {
+        padding: 0.85rem 0.75rem; /* Aumenta el área de toque en pantallas táctiles */
+        font-size: 1rem; /* Previene el zoom automático al hacer focus en iOS */
+    }
+}

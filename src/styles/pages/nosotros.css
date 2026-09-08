@@ -25,33 +25,37 @@ body {
     width: 100%;
 }
 
+/* ==========================================================================
+   1. ESTILOS BASE (Móvil por defecto: < 768px)
+   ========================================================================== */
+
 .section-container {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 0 1.5rem;
+    padding: 0 1.25rem;
     width: 100%;
     box-sizing: border-box;
 }
 
 .section-title {
     font-family: var(--font-title);
-    font-size: 2rem;
+    font-size: 1.6rem;
     color: var(--orange-primary);
     text-align: center;
-    margin-bottom: 2rem;
+    margin-bottom: 1.5rem;
 }
 
-/* 1. Hero Section con Cuadro/Tarjeta independiente */
+/* --- Hero Section --- */
 .nosotros-hero {
     background-color: var(--jet-dark);
-    padding: 3rem 1.5rem 2.5rem;
+    padding: 2rem 1rem;
 }
 
 .hero-card {
     background-color: var(--jet-card);
     border: 1px solid rgba(122, 166, 179, 0.25);
     border-radius: 16px;
-    padding: 3rem 2.5rem;
+    padding: 2rem 1.25rem;
     text-align: center;
     max-width: 850px;
     margin: 0 auto;
@@ -60,25 +64,25 @@ body {
 
 .hero-subtitle {
     color: var(--moonstone);
-    font-size: 0.85rem;
+    font-size: 0.75rem;
     text-transform: uppercase;
     letter-spacing: 2px;
     display: block;
-    margin-bottom: 0.75rem;
+    margin-bottom: 0.5rem;
     font-weight: 600;
 }
 
 .hero-card h1 {
     font-family: var(--font-title);
-    font-size: 2.5rem;
+    font-size: 1.8rem;
     color: var(--orange-primary);
-    margin: 0 0 1.25rem 0;
-    line-height: 1.2;
+    margin: 0 0 1rem 0;
+    line-height: 1.25;
 }
 
 .nosotros-description {
-    font-size: 1.1rem;
-    line-height: 1.7;
+    font-size: 1rem;
+    line-height: 1.6;
     color: var(--text-white);
     margin: 0;
 }
@@ -87,23 +91,23 @@ body {
     color: var(--orange-primary);
 }
 
-/* 2. Sección Valores */
+/* --- Sección Valores --- */
 .nosotros-valores-section {
     background-color: #212323;
-    padding: 4rem 0;
+    padding: 2.5rem 0;
 }
 
 .nosotros-valores {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 2rem;
+    grid-template-columns: 1fr; /* Una sola columna en celular */
+    gap: 1.25rem;
 }
 
 .valor-card {
     background-color: var(--jet-dark);
     border: 1px solid rgba(122, 166, 179, 0.3);
     border-radius: 12px;
-    padding: 2.5rem 1.5rem;
+    padding: 1.75rem 1.25rem;
     text-align: center;
     transition: transform 0.3s ease, border-color 0.3s ease;
 }
@@ -114,9 +118,9 @@ body {
 }
 
 .valor-icon {
-    width: 60px;
-    height: 60px;
-    margin: 0 auto 1.25rem;
+    width: 50px;
+    height: 50px;
+    margin: 0 auto 1rem;
     background-color: rgba(238, 108, 41, 0.1);
     border-radius: 50%;
     display: flex;
@@ -125,29 +129,29 @@ body {
 }
 
 .valor-icon i {
-    font-size: 1.75rem;
+    font-size: 1.5rem;
     color: var(--orange-primary);
 }
 
 .valor-card h3 {
     font-family: var(--font-title);
-    font-size: 1.35rem;
+    font-size: 1.25rem;
     color: var(--text-white);
-    margin: 0 0 0.75rem 0;
+    margin: 0 0 0.5rem 0;
 }
 
 .valor-card p {
-    font-size: 0.95rem;
+    font-size: 0.9rem;
     color: var(--text-muted);
     line-height: 1.5;
     margin: 0;
 }
 
-/* 3. Registro SEMARNAT */
+/* --- Registro SEMARNAT --- */
 .nosotros-registro-section {
     background-color: var(--bg-light);
     color: var(--jet-dark);
-    padding: 4rem 1.5rem;
+    padding: 2.5rem 1rem;
     display: flex;
     justify-content: center;
 }
@@ -156,7 +160,7 @@ body {
     background-color: var(--text-white);
     border: 2px dashed var(--moonstone);
     border-radius: 16px;
-    padding: 3rem 2rem;
+    padding: 2rem 1.25rem;
     text-align: center;
     max-width: 650px;
     width: 100%;
@@ -164,20 +168,20 @@ body {
 }
 
 .registro-badge i {
-    font-size: 3rem;
+    font-size: 2.5rem;
     color: var(--orange-primary);
-    margin-bottom: 1rem;
+    margin-bottom: 0.75rem;
 }
 
 .registro-card h2 {
     font-family: var(--font-title);
-    font-size: 1.75rem;
+    font-size: 1.4rem;
     color: var(--jet-dark);
     margin: 0 0 0.5rem 0;
 }
 
 .registro-number {
-    font-size: 1.25rem;
+    font-size: 1.1rem;
     font-weight: bold;
     color: var(--orange-primary);
     letter-spacing: 1px;
@@ -185,30 +189,104 @@ body {
 }
 
 .registro-text {
-    font-size: 0.95rem;
+    font-size: 0.9rem;
     color: #555555;
     margin: 0;
 }
 
-@media (max-width: 900px) {
-    .nosotros-valores {
-        grid-template-columns: 1fr;
-        gap: 1.5rem;
+/* ==========================================================================
+   2. ESCALADO PROGRESIVO (Tablets y Escritorio: >= 768px)
+   ========================================================================== */
+@media (min-width: 768px) {
+    .section-container {
+        padding: 0 1.5rem;
+    }
+
+    .section-title {
+        font-size: 2rem;
+        margin-bottom: 2rem;
+    }
+
+    /* --- Hero Section --- */
+    .nosotros-hero {
+        padding: 3rem 1.5rem 2.5rem;
     }
 
     .hero-card {
-        padding: 2rem 1.25rem;
+        padding: 3rem 2.5rem;
+    }
+
+    .hero-subtitle {
+        font-size: 0.85rem;
+        margin-bottom: 0.75rem;
     }
 
     .hero-card h1 {
-        font-size: 2rem;
+        font-size: 2.5rem;
+        margin-bottom: 1.25rem;
     }
 
     .nosotros-description {
-        font-size: 1rem;
+        font-size: 1.1rem;
+        line-height: 1.7;
+    }
+
+    /* --- Sección Valores --- */
+    .nosotros-valores-section {
+        padding: 4rem 0;
+    }
+
+    .nosotros-valores {
+        grid-template-columns: repeat(3, 1fr); /* Expande a 3 columnas */
+        gap: 2rem;
+    }
+
+    .valor-card {
+        padding: 2.5rem 1.5rem;
+    }
+
+    .valor-icon {
+        width: 60px;
+        height: 60px;
+        margin-bottom: 1.25rem;
+    }
+
+    .valor-icon i {
+        font-size: 1.75rem;
+    }
+
+    .valor-card h3 {
+        font-size: 1.35rem;
+        margin-bottom: 0.75rem;
+    }
+
+    .valor-card p {
+        font-size: 0.95rem;
+    }
+
+    /* --- Registro SEMARNAT --- */
+    .nosotros-registro-section {
+        padding: 4rem 1.5rem;
     }
 
     .registro-card {
-        padding: 2rem 1rem;
+        padding: 3rem 2rem;
+    }
+
+    .registro-badge i {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+    }
+
+    .registro-card h2 {
+        font-size: 1.75rem;
+    }
+
+    .registro-number {
+        font-size: 1.25rem;
+    }
+
+    .registro-text {
+        font-size: 0.95rem;
     }
 }

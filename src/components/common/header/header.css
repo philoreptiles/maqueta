@@ -112,11 +112,44 @@
     box-shadow: 0 3px 8px rgba(37, 211, 102, 0.3) !important;
 }
 
+/* --- Adaptación Responsive para Celular --- */
 @media (max-width: 768px) {
+    .site-header {
+        padding: 0.5rem 0.75rem !important;
+    }
+
     .header-container {
         flex-direction: column;
         align-items: center;
         padding: 0.25rem;
-        gap: 0.5rem;
+        gap: 0.6rem;
+        width: 100%;
+        height: 85px; /* Semicolón corregido */
+    }
+
+    .brand-info {
+        align-items: center;
+        text-align: center;
+    }
+
+    .brand-title {
+        font-size: 1.4rem !important;
+    }
+
+    .header-nav {
+        flex-wrap: wrap; /* Evita desbordamiento si hay varios botones */
+        justify-content: center;
+        width: 100%;
+        gap: 0.9rem;
+    }
+
+    .nav-btn {
+        padding: 0.35rem 0.65rem !important;
+        font-size: 0.85rem !important;
+    }
+
+    .whatsapp-btn {
+        padding: 0.35rem 0.75rem !important;
+        font-size: 0.8rem !important;
     }
 }
