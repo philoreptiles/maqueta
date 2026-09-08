@@ -1,163 +1,401 @@
 ﻿.card {
     background-color: var(--card-bg, #282B2B);
+    /* ↑ Fondo de la tarjeta. Usa variable CSS o color gris oscuro por defecto */
+    
     border: 1px solid var(--border-color, #3D4242);
-    border-radius: 12px;
+    /* ↑ Borde gris oscuro alrededor de toda la tarjeta */
+    
+    border-radius: 8px;
+    /* ↑ Esquinas redondeadas de 12px */
+    
     overflow: hidden;
+    /* ↑ Recorta cualquier contenido que se salga (como imágenes) */
+    
     cursor: pointer;
-    transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.25s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.25s ease;
+    /* ↑ Cambia el cursor a "mano" al pasar por encima */
+    
+    transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), 
+                box-shadow 0.25s cubic-bezier(0.4, 0, 0.2, 1), 
+                border-color 0.25s ease;
+    /* ↑ Animaciones suaves cuando cambia:
+       - transform (movimiento)
+       - box-shadow (sombra)
+       - border-color (color del borde)
+       Todas duran 0.25 segundos */
+    
     position: relative;
+    /* ↑ Para posicionar elementos hijos con 'absolute' */
+    
     display: flex;
+    /* ↑ Activa Flexbox para organizar hijos */
+    
     flex-direction: column;
+    /* ↑ Organiza los hijos en columna (uno debajo de otro) */
+    
     height: 100%;
+    /* ↑ Ocupa toda la altura disponible en su contenedor */
+    
     box-sizing: border-box;
+    /* ↑ Incluye padding y border en el tamaño total */
 }
 
 .card:hover {
-    transform: translateY(-4px);
+    transform: translateY(-8px);
+    /* ↑ Sube la tarjeta 4px hacia arriba (efecto flotante) */
+    
     box-shadow: 0 12px 24px rgba(0, 0, 0, 0.5);
+    /* ↑ Sombra grande y oscura debajo (profundidad) */
+    
     border-color: var(--moonstone-color, #7AA6B3);
+    /* ↑ Cambia el borde a color azul-gris */
 }
 
 .card-image-wrapper {
     position: relative;
+    /* ↑ Para posicionar la etiqueta de estado encima */
+    
     width: 100%;
-    height: 220px;
+    /* ↑ Ocupa todo el ancho disponible */
+    
+    height: 280px;
+    /* ← ¡AQUÍ CONTROLAS LA ALTURA DE LA IMAGEN! */
+    /* ↑ En desktop mide 220px de alto */
+    
     overflow: hidden;
+    /* ↑ Recorta la imagen si se sale */
+    
     background-color: var(--jet-dark, #1E2020);
+    /* ↑ Fondo negro por si la imagen no carga */
 }
 
 .card-image {
     width: 100%;
+    /* ↑ Ocupa todo el ancho del wrapper */
+    
     height: 100%;
+    /* ↑ Ocupa toda la altura del wrapper */
+    
     object-fit: cover;
+    /* ↑ La imagen se recorta para llenar sin deformarse */
+    
     transition: transform 0.35s ease;
+    /* ↑ Animación suave al hacer zoom */
 }
 
 .card:hover .card-image {
     transform: scale(1.05);
+    /* ← ¡AQUÍ CONTROLAS EL ZOOM AL HOVER! */
+    /* ↑ Al pasar el mouse, la imagen crece 5% */
 }
 
 .status-badge {
     position: absolute;
+    /* ↑ Se posiciona dentro del wrapper de imagen */
+    
     top: 8px;
+    /* ↑ Distancia desde arriba */
+    
     right: 8px;
+    /* ↑ Distancia desde la derecha */
+    
     z-index: 10 !important;
+    /* ↑ Asegura que esté por encima de todo */
+    
     padding: 0.3rem 0.7rem;
-    border-radius: 10px;
+    /* ↑ Espaciado interno (arriba/abajo 0.3rem, lados 0.7rem) */
+    
+    border-radius: 8px;
+    /* ↑ Esquinas redondeadas */
+    
     font-size: 0.72rem;
+    /* ← ¡AQUÍ CONTROLAS EL TAMAÑO DEL TEXTO! */
+    
     font-weight: 700;
+    /* ↑ Texto en negrita */
+    
     letter-spacing: 0.5px;
+    /* ↑ Separación entre letras */
+    
     text-transform: uppercase;
+    /* ↑ Todo en mayúsculas */
+    
     color: #ffffff;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+    /* ↑ Texto blanco */
+    
+    box-shadow: 1px 5px 5px rgba(0,0,0,0.4);
+    /* ↑ Sombra para resaltar */
+    
     pointer-events: none;
+    /* ↑ No interfiere con clics */
+    
     opacity: 1 !important;
     visibility: visible !important;
+    /* ↑ Fuerza que siempre sea visible */
 }
 
+/* Colores según estado */
 .status-disponible { background-color: var(--status-disponible, #2E7D32); }
+/* ↑ Verde para disponible */
+
 .status-apartado { background-color: var(--status-apartado, #EE6C29); }
+/* ↑ Naranja para apartado */
+
 .status-vendido { background-color: var(--status-vendido, #D32F2F); }
+/* ↑ Rojo para vendido */
+
 .status-holdback { background-color: var(--status-holdback, #7AA6B3); }
+/* ↑ Azul-gris para holdback */
 
 .card-content {
-    padding: 1.25rem;
+    padding: 1rem;
+    /* ← ¡AQUÍ CONTROLAS EL ESPACIADO INTERNO! */
+    /* ↑ En desktop: 1.25rem de padding en todos los lados */
+    
     display: flex;
+    /* ↑ Activa Flexbox */
+    
     flex-direction: column;
-    gap: 0.35rem;
+    /* ↑ Organiza en columna */
+    
+    gap: 0.2rem;
+    /* ↑ Espacio entre elementos (especie, nombre, detalles, precio) */
+    
     flex: 1;
+    /* ↑ Hace que este bloque ocupe el espacio restante */
 }
 
 .card-species {
     font-family: var(--font-primary, serif);
+    /* ↑ Fuente con serifa o la variable definida */
+    
     font-style: italic;
-    font-size: 0.95rem;
+    /* ↑ Texto en cursiva */
+    
+    font-size: 1rem;
+    /* ← ¡TAMAÑO DE LA ESPECIE! */
+    
     color: var(--moonstone-color, #7AA6B3);
+    /* ↑ Color azul-gris */
 }
 
 .card-genetics {
-    font-size: 1.4rem;
+    font-size: 1.5rem;
+    /* ← ¡TAMAÑO DEL NOMBRE/GENÉTICA! */
+    /* ↑ En desktop: 1.4rem */
+    
     font-weight: 700;
+    /* ↑ Negrita */
+    
     color: var(--text-light, #F4F5F5);
+    /* ↑ Texto blanco/gris claro */
+    
     margin: 0;
-    line-height: 1.2;
+    /* ↑ Sin margen */
+    
+    line-height: 1;
+    /* ↑ Altura de línea (espacio entre líneas) */
 }
 
 .card-details {
-    font-size: 0.88rem;
+    font-size: 1rem;
+    /* ← ¡TAMAÑO DE DETALLES (sexo • año)! */
+    
     color: #A0A5A5;
+    /* ↑ Color gris */
+    
     margin-top: 0.1rem;
+    /* ↑ Pequeño espacio arriba */
 }
 
 .card-price {
     font-size: 1.5rem;
+    /* ← ¡TAMAÑO DEL PRECIO! */
+    /* ↑ En desktop: 1.5rem */
+    
     font-weight: 800;
+    /* ↑ Extra negrita */
+    
     color: var(--primary-color, #EE6C29);
+    /* ↑ Color naranja */
+    
     margin-top: auto;
-    padding-top: 0.1rem;
+    /* ↑ Empuja el precio hacia abajo (si hay espacio) */
+    
+    padding-top: 0rem;
+    /* ↑ Pequeño espacio arriba */
 }
 
-/* --- Ajuste compacto para Móvil (< 768px) --- */
 @media (max-width: 767px) {
+    .catalog-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+        padding: 0.5rem;
+        /* ← ¡AQUÍ CONTROLAS EL ANCHO DE LAS TARJETAS EN MÓVIL! */
+        /* ↑ En móvil: dos columnas → tarjetas más anchas */
+    }
+    /* ↑ ESTE BLOQUE SE ACTIVA EN PANTALLAS DE 767px O MENOS */
+    
     .card {
         border-radius: 8px;
+        /* ← ¡AQUÍ REDUCES EL REDONDEO! */
+        /* ↑ En móvil: esquinas menos redondeadas */
     }
 
     .card-image-wrapper {
-        height: 120px;
+        height: 150px;
+        /* ← ¡AQUÍ REDUCES LA ALTURA DE LA IMAGEN! */
+        /* ↑ En móvil: imágenes más bajas (150px) */
     }
 
     .status-badge {
         top: 4px;
         right: 4px;
+        /* ← ¡AQUÍ AJUSTAS LA POSICIÓN DEL BADGE! */
+        
         padding: 0.15rem 0.4rem;
-        font-size: 0.58rem;
+        /* ← ¡AQUÍ REDUCES EL PADDING DEL BADGE! */
+        
+        font-size: 0.55rem;
+        /* ← ¡AQUÍ REDUCES EL TEXTO DEL BADGE! */
+        
         border-radius: 6px;
+        /* ← ¡AQUÍ REDUCES EL REDONDEO DEL BADGE! */
     }
 
     .card-content {
         padding: 0.5rem;
-        gap: 0.15rem;
+        /* ← ¡AQUÍ REDUCES EL PADDING INTERNO! */
+        /* ↑ En móvil: más compacto */
+        
+        gap: 0.2rem;
+        /* ← ¡AQUÍ REDUCES EL ESPACIO ENTRE ELEMENTOS! */
     }
 
     .card-species {
-        font-size: 0.68rem;
+        font-size: 0.65rem;
+        /* ← ¡AQUÍ REDUCES EL TAMAÑO DE LA ESPECIE! */
     }
 
     .card-genetics {
-        font-size: 0.88rem;
+        font-size: 1rem;
+        /* ← ¡AQUÍ REDUCES EL TAMAÑO DEL NOMBRE! */
+        
         line-height: 1.15;
+        /* ← ¡AQUÍ AJUSTAS LA ALTURA DE LÍNEA! */
     }
 
     .card-details {
-        font-size: 0.65rem;
+        font-size: 0.7rem;
+        /* ← ¡AQUÍ REDUCES EL TAMAÑO DE DETALLES! */
     }
 
     .card-price {
-        font-size: 0.92rem;
-        padding-top: 0.2rem;
+        font-size: 1rem;
+        /* ← ¡AQUÍ REDUCES EL TAMAÑO DEL PRECIO! */
+        
+        padding-top: 0.1rem;
     }
 }
 
-/* --- Ajuste Ultra Compacto (< 400px) --- */
 @media (max-width: 399px) {
+    /* ↑ ESTE BLOQUE SE ACTIVA EN PANTALLAS DE 399px O MENOS */
+    
     .card-image-wrapper {
-        height: 100px;
+        height: 150px;
+        /* ← ¡AQUÍ REDUCES LA IMAGEN AÚN MÁS! */
     }
 
     .card-content {
         padding: 0.35rem;
+        /* ← ¡AQUÍ REDUCES EL PADDING AÚN MÁS! */
     }
 
     .card-genetics {
         font-size: 0.8rem;
+        /* ← ¡AQUÍ REDUCES EL NOMBRE AÚN MÁS! */
     }
 
     .card-details {
         font-size: 0.6rem;
+        /* ← ¡AQUÍ REDUCES DETALLES AÚN MÁS! */
     }
 
     .card-price {
         font-size: 0.85rem;
+        /* ← ¡AQUÍ REDUCES EL PRECIO AÚN MÁS! */
+    }
+}
+
+.catalog-grid {
+    display: grid;
+    /* ↑ Activa CSS Grid para organizar las tarjetas */
+    
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    /* ← ¡AQUÍ CONTROLAS EL ANCHO Y CANTIDAD DE COLUMNAS! */
+    /* ↑ Explicación:
+       - auto-fill: crea tantas columnas como quepan
+       - minmax(280px, 1fr): cada columna mide mínimo 280px y máximo 1fr
+       → Esto hace que en desktop haya 3-4 columnas */
+    
+    gap: 1.5rem;
+    /* ← ¡AQUÍ CONTROLAS EL ESPACIO ENTRE TARJETAS! */
+    /* ↑ En desktop: 1.5rem de separación */
+    
+    padding: 1.5rem;
+    /* ← ¡AQUÍ CONTROLAS EL ESPACIO EXTERIOR! */
+    /* ↑ En desktop: 1.5rem de padding alrededor */
+    
+    max-width: 1400px;
+    /* ↑ Ancho máximo del contenedor */
+    
+    margin: 0 auto;
+    /* ↑ Centra el contenedor horizontalmente */
+    
+    width: 100%;
+    /* ↑ Ocupa todo el ancho disponible */
+    
+    box-sizing: border-box;
+    /* ↑ Incluye padding en el tamaño total */
+}
+
+@media (max-width: 767px) {
+    .catalog-grid {
+        grid-template-columns: repeat(2, 1fr);
+        /* ← ¡ESTA ES LA CLAVE PARA HACER TARJETAS MÁS ANCHAS! */
+        /* ↑ 1fr = una sola columna → cada tarjeta ocupa TODO el ancho */
+        
+        gap: 1rem;
+        /* ← ¡AQUÍ REDUCES EL ESPACIO ENTRE TARJETAS! */
+        
+        padding: 0.4rem;
+        /* ← ¡AQUÍ REDUCES EL PADDING EXTERIOR! */
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+    .catalog-grid {
+        grid-template-columns: repeat(2, 1fr);
+        /* ← ¡AQUÍ CONTROLAS LAS COLUMNAS EN TABLET! */
+        /* ↑ 2 columnas en tablet */
+        
+        gap: 1rem;
+        /* ← ¡AQUÍ AJUSTAS EL ESPACIO EN TABLET! */
+        
+        padding: 1rem;
+        /* ← ¡AQUÍ AJUSTAS EL PADDING EN TABLET! */
+    }
+}
+
+@media (max-width: 399px) {
+    .catalog-grid {
+        grid-template-columns: repeat(2, 1fr);
+        /* ← ¡ESTA ES LA CLAVE PARA HACER TARJETAS MÁS ANCHAS! */
+        /* ↑ 1fr = una sola columna → cada tarjeta ocupa TODO el ancho */
+        
+        gap: 1rem;
+        /* ← ¡AQUÍ REDUCES EL ESPACIO ENTRE TARJETAS! */
+        
+        padding: 0.4rem;
+        /* ← ¡AQUÍ REDUCES EL PADDING EXTERIOR! */
     }
 }
