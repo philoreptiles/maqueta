@@ -532,14 +532,7 @@ input[type="number"] {
     display: block;
 }
 
-/* Badges de Estatus
-   NOTA: .status-badge y sus variantes también existen en card.css (para el
-   overlay de las tarjetas del catálogo público) con "position: absolute".
-   Como card.css se importa globalmente vía main.css, esas reglas también
-   llegan a esta página. Aquí las escopamos bajo ".table-premium" para que
-   ganen siempre por especificidad, y reseteamos explícitamente "position"
-   y demás propiedades de posicionamiento absoluto para que el badge se
-   quede dentro de la celda de la tabla en vez de salir del flujo normal. */
+/* Badges de Estatus */
 .table-premium .status-badge {
     position: static;
     top: auto;
@@ -865,12 +858,6 @@ input[type="number"] {
     border-radius: 6px;
 }
 
-@media (max-width: 640px) {
-    .edit-images-grid {
-        grid-template-columns: 1fr;
-    }
-}
-
 /* Alertas */
 .alert-premium {
     padding: 0.85rem 1.25rem;
@@ -900,4 +887,194 @@ input[type="number"] {
 
 .hidden {
     display: none !important;
+}
+
+/* ==========================================================================
+   ADAPTACIÓN PARA CELULARES / PANTALLAS PEQUEÑAS (Width max: 400px)
+   ========================================================================== */
+@media (max-width: 400px) {
+    /* --- Layout y Márgenes Generales --- */
+    .admin-main {
+        margin: 1rem auto;
+        padding: 0 0.75rem 1.5rem;
+        width: 100%;
+    }
+
+    .dashboard-header {
+        margin-bottom: 1rem;
+    }
+
+    .dashboard-header h1 {
+        font-size: 1.3rem;
+    }
+
+    .dashboard-header p {
+        font-size: 0.9rem;
+    }
+
+    /* --- Encabezado y Menú de Navegación --- */
+    .header-container {
+        padding: 0.75rem 1rem;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.75rem;
+    }
+
+    .brand-title {
+        font-size: 1.2rem;
+    }
+
+    .nav-menu {
+        width: 100%;
+        justify-content: space-between;
+        gap: 0.75rem;
+    }
+
+    .nav-link {
+        font-size: 1rem;
+    }
+
+    /* --- Tarjetas (Premium Cards) --- */
+    .premium-card,
+    .premium-card:has(#add-ejemplar-form),
+    .premium-card:has(.filter-grid-premium) {
+        padding: 0.5rem;
+        border-radius: 8px;
+    }
+
+    .card-title {
+        font-size: 1.3rem;
+        margin-bottom: 0.75rem;
+    }
+
+    /* --- Formularios (Agregar Ejemplar y Grillas) --- */
+    .admin-grid-form,
+    #add-ejemplar-form {
+        grid-template-columns: 1fr;
+        gap: 0.5rem;
+        width: 100%;
+    }
+
+    #add-ejemplar-form .form-group-premium label {
+        font-size: 0.7rem;
+    }
+
+    #add-ejemplar-form input[type="text"],
+    #add-ejemplar-form input[type="number"],
+    #add-ejemplar-form select {
+        font-size: 0.8rem;
+        height: 36px;
+    }
+
+    .drop-zone {
+        min-height: 48px;
+        padding: 0.5rem;
+    }
+
+    .form-actions-full {
+        width: 100%;
+    }
+
+    .form-actions-full .btn-premium {
+        width: 100%;
+        padding: 0.65rem;
+        font-size: 0.9rem;
+    }
+
+    /* --- Panel de Estadísticas --- */
+    .stats-panel {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0.5rem;
+        width: 100%;
+    }
+
+    .stat-card {
+        padding: 0.3rem 0.5rem;
+    }
+
+    .stat-number {
+        font-size: 1.4rem;
+    }
+
+    .stat-label {
+        font-size: 0.65rem;
+    }
+
+    /* --- Filtros de Inventario --- */
+    .filter-grid-premium {
+        grid-template-columns: 1fr;
+        gap: 0.3rem;
+        width: 100%;
+    }
+
+    .filter-actions-right {
+        flex-direction: column;
+        width: 100%;
+        gap: 0.4rem;
+    }
+
+    .filter-actions-right .btn-premium,
+    .filter-actions-right .btn-secondary-premium {
+        width: 100%;
+        text-align: center;
+        padding: 0.55rem;
+    }
+
+    /* --- Tabla de Datos -------------- */
+    .table-premium th,
+    .table-premium td {
+        padding: 0.48rem 0.5rem;
+        font-size: 0.78rem;
+    }
+
+    .table-thumb {
+        width: 36px;
+        height: 36px;
+    }
+
+    .btn-icon {
+        width: 30px;
+        height: 30px;
+    }
+
+    /* --- Modal de Edición --- */
+    .edit-modal-overlay {
+        padding: 0.4rem;
+    }
+
+    .edit-modal {
+        border-radius: 10px;
+        max-height: 98vh;
+    }
+
+    .edit-modal-header {
+        padding: 0.6rem 0.85rem;
+    }
+
+    .edit-modal-form {
+        padding: 0.6rem 0.85rem;
+    }
+
+    .form-row {
+        grid-template-columns: 1fr;
+        gap: 0.5rem;
+    }
+
+    .edit-images-grid {
+        grid-template-columns: 1fr;
+        gap: 0.6rem;
+    }
+
+    .edit-modal-actions {
+        flex-direction: column-reverse;
+        width: 100%;
+        gap: 0.4rem;
+    }
+
+    .edit-modal-actions .btn-premium,
+    .edit-modal-actions .btn-secondary-premium {
+        width: 100%;
+        text-align: center;
+        padding: 0.6rem;
+    }
 }
